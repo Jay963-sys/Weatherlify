@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weatherify 5-Day Forecast</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <h1>Weatherify 5-Day Forecast</h1>
+    <form method="POST">
+        <input type="text" name="city" placeholder="Enter city" required>
+        <button type="submit">Get Forecast</button>
+    </form>
+    
+    <a href="/">Current Weather</a>
+
+    {% if forecast %}
+    {% if forecast == "City not found!" %}
+        <p>{{ forecast }}</p>
+    {% else %}
+        <h2>5-Day Forecast for {{ request.form.get("city") }}</h2>
+        {% for day in forecast %}
+            <div class="weather-card"> 
+                <p><strong>Date:</strong> {{ day.date }}</p>
+                <p><strong>Temperature:</strong> {{ day.temperature }}°C</p>
+                <p><strong>Description:</strong> {{ day.description }}</p>
+                <img src="http://openweathermap.org/img/wn/{{ day.icon }}@2x.png" alt="Weather icon">
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endif %}
+
+</body>
+</html>
